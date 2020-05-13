@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -39,6 +40,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player("Jeremy", room['outside'])
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +53,50 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print("\033[0;37;40m Welcome to my first MUD")
+while True:
+    # print(
+    #     f"Current Room: {player.room.name} \n === Description === \n {player.room.description}")
+    print(player.room)
+
+    player_input = input(
+        'Which Direction do you wish to go?\n N, E, S, W or q to quit? ')
+
+    if player_input == 'q':
+        print('Thanks for playing')
+        break
+
+    if player_input == 'n':
+        print('You attempt to travel' + '\033[1;32;40m north \033[0;37;40m')
+        try:
+            player.room = player.room.n_to
+
+        except:
+            print('Error moving north')
+
+    if player_input == 'e':
+        print('You attempt to travel' + '\033[1;32;40m east \033[0;37;40m')
+
+        try:
+            player.room = player.room.e_to
+
+        except:
+            print('Error moving east')
+
+    if player_input == 's':
+        print('You attempt to travel' + '\033[1;32;40m south \033[0;37;40m')
+
+        try:
+            player.room = player.room.s_to
+
+        except:
+            print('Error moving south')
+
+    if player_input == 'w':
+        print('You attempt to travel' + '\033[1;32;40m west \033[0;37;40m')
+
+        try:
+            player.room = player.room.w_to
+
+        except:
+            print('Error moving West')
