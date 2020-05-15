@@ -66,37 +66,5 @@ while True:
         print('Thanks for playing')
         break
 
-    if player_input == 'n':
-        print('You attempt to travel' + '\033[1;32;40m north \033[0;37;40m')
-        try:
-            player.room = player.room.n_to
-
-        except:
-            print('Error moving north')
-
-    if player_input == 'e':
-        print('You attempt to travel' + '\033[1;32;40m east \033[0;37;40m')
-
-        try:
-            player.room = player.room.e_to
-
-        except:
-            print('Error moving east')
-
-    if player_input == 's':
-        print('You attempt to travel' + '\033[1;32;40m south \033[0;37;40m')
-
-        try:
-            player.room = player.room.s_to
-
-        except:
-            print('Error moving south')
-
-    if player_input == 'w':
-        print('You attempt to travel' + '\033[1;32;40m west \033[0;37;40m')
-
-        try:
-            player.room = player.room.w_to
-
-        except:
-            print('Error moving West')
+    else:
+        player.travel(player_input)
