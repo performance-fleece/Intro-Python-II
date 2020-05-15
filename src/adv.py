@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+import time
 
 # Declare all the rooms
 
@@ -55,6 +56,7 @@ player = Player("Jeremy", room['outside'])
 # If the user enters "q", quit the game.
 print("\033[0;37;40m Welcome to my first MUD")
 while True:
+    time.sleep(.5)
     # print(
     #     f"Current Room: {player.room.name} \n === Description === \n {player.room.description}")
     print(player.room)
@@ -62,9 +64,21 @@ while True:
     player_input = input(
         'Which Direction do you wish to go?\n N, E, S, W or q to quit? ')
 
+    print(player_input.split())
+    print(len(player_input.split()))
+
     if player_input == 'q':
         print('Thanks for playing')
         break
 
-    else:
+    # if player_input == ('n' or 's' or 'e' or 'w'):
+    #     player.travel(player_input)
+    if len(player_input.split()) == 2:
+        if player_input == "take":
+            print("take method here")
+
+    if player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
         player.travel(player_input)
+
+    else:
+        print("You are \033[1;31;40mconfused\033[0;37;40m and sit down")
