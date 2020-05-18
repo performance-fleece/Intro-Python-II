@@ -1,7 +1,6 @@
 class Item:
-    def __init__(self, name, description="A non-descript item", weight, cost):
+    def __init__(self, name, weight=1, cost=1):
         self.name = name
-        self.description = description
         self.weight = weight
         self.cost = cost
 

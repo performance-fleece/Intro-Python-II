@@ -1,5 +1,6 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+from item import Item
 
 
 class Player:
@@ -8,7 +9,7 @@ class Player:
     def __init__(self, name, room=default_start, items=[]):
         self.name = name
         self.room = room
-        self.items = items
+        self.items = [Item(i) for i in items]
 
     def __str__(self):
         return f"{self.name} is in {self.room}"
@@ -39,4 +40,4 @@ class Player:
                 self.room = self.room.w_to
 
         except:
-            print("The way is blocked")
+            print("The way is \033[1;31;40mblocked\033[0;37;40m")

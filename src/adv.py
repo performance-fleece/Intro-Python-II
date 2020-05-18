@@ -67,18 +67,22 @@ while True:
     print(player_input.split())
     print(len(player_input.split()))
 
-    if player_input == 'q':
-        print('Thanks for playing')
-        break
-
     # if player_input == ('n' or 's' or 'e' or 'w'):
     #     player.travel(player_input)
     if len(player_input.split()) == 2:
-        if player_input == "take":
-            print("take method here")
+        split_input = player_input.split()
+        if (split_input[0] == "take" or split_input[0] == "get"):
+            print(f"take/get method here of Item: {split_input[1]}")
 
-    if player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
-        player.travel(player_input)
+    if len(player_input.split()) == 1:
+        try:
 
-    else:
-        print("You are \033[1;31;40mconfused\033[0;37;40m and sit down")
+            if player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
+                player.travel(player_input)
+
+            if player_input == 'q':
+                print('Thanks for playing')
+                break
+
+        except:
+            print("You are \033[1;31;40mconfused\033[0;37;40m and sit down")
