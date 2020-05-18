@@ -5,4 +5,4 @@ class Item:
         self.cost = cost
 
     def __str__(self):
-        return f"{self.name} weights {self.weight} and costs {self.cost}"
+        return f"A {self.name} lies in the dirt"

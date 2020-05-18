@@ -1,12 +1,13 @@
 from room import Room
 from player import Player
+from item import Item
 import time
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", items=["sword", "mace"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -23,6 +24,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'sword': Item("short sword"),
+    'long_sword': Item("long sword"),
+    'mace': Item('mace')
+
+}
 
 # Link rooms together
 
@@ -60,6 +67,9 @@ while True:
     # print(
     #     f"Current Room: {player.room.name} \n === Description === \n {player.room.description}")
     print(player.room)
+    if len(player.room.items) >= 1:
+        print(f"This room contains {len(player.room.items)} items:")
+        [print(item) for item in player.room.items]
 
     player_input = input(
         'Which Direction do you wish to go?\n N, E, S, W or q to quit? ')
@@ -71,13 +81,13 @@ while True:
     #     player.travel(player_input)
     if len(player_input.split()) == 2:
         split_input = player_input.split()
-        if (split_input[0] == "take" or split_input[0] == "get"):
+        if split_input[0].lower in ["take", "get"]:
             print(f"take/get method here of Item: {split_input[1]}")
 
     if len(player_input.split()) == 1:
         try:
-
-            if player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
+            if player_input.lower() in ["n", "e", "s", "w"]:
+                # if player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
                 player.travel(player_input)
 
             if player_input == 'q':
