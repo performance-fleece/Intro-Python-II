@@ -1,10 +1,13 @@
 from room import Room
+from player import Player
+from item import Item
+import time
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", items=["sword", "mace", "long_sword", "sword"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -21,6 +24,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+# items = {
+#     'sword': Item("short sword"),
+#     'long_sword': Item("long sword"),
+#     'mace': Item("mace")
+
+# }
 
 # Link rooms together
 
@@ -39,6 +48,9 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player("Jeremy", room['outside'], items=["sword"])
+
+
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +61,48 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print("\033[0;37;40m Welcome to my first MUD")
+while True:
+    time.sleep(.5)
+    # print(
+    #     f"Current Room: {player.room.name} \n === Description === \n {player.room.description}")
+    print(player.room)
+    if len(player.room.items) >= 1:
+        print(f"This room contains {len(player.room.items)} items:")
+        [print("       " + str(item)) for item in player.room.items]
+
+    if len(player.items) >= 1:
+        print(f"Player Inventory:")
+        [print("       " + str(item)) for item in player.items]
+
+    player_input = input(
+        'Which Direction do you wish to go?\n N, E, S, W or q to quit? ')
+
+    print(player_input.split())
+    print(len(player_input.split()))
+
+    # if player_input == ('n' or 's' or 'e' or 'w'):
+    #     player.travel(player_input)
+    if len(player_input.split()) == 2:
+        split_input = player_input.split()
+
+        if split_input[0].lower() in ["take", "get"]:
+            try:
+                print(f"take/get method here of Item: {split_input[1]}")
+                player.items.append(Item(item[split_input[1]]))
+
+            except:
+                print("You grab at nothing")
+
+    if len(player_input.split()) == 1:
+        try:
+            if player_input.lower() in ["n", "e", "s", "w"]:
+                # if player_input == 'n' or player_input == 'e' or player_input == 's' or player_input == 'w':
+                player.travel(player_input)
+
+            if player_input == 'q':
+                print('Thanks for playing')
+                break
+
+        except:
+            print("You are \033[1;31;40mconfused\033[0;37;40m and sit down")
