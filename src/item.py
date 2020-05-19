@@ -6,3 +6,6 @@ class Item:
 
     def __str__(self):
         return f"A {self.name} lies in the dirt"
+
+    # def take(self, item):
+    #     player.items.append()

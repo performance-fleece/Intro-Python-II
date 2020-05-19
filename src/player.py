@@ -9,7 +9,7 @@ class Player:
     def __init__(self, name, room=default_start, items=[]):
         self.name = name
         self.room = room
-        self.items = [Item(i) for i in items]
+        self.items = [i for i in items]
 
     def __str__(self):
         return f"{self.name} is in {self.room}"
@@ -41,3 +41,13 @@ class Player:
 
         except:
             print("The way is \033[1;31;40mblocked\033[0;37;40m")
+
+    def add(self, item):
+        self.items.append(item)
+        # [print(item) for item in self.room.items]
+        self.room.items.remove(item)
+
+    def drop(self, item):
+        # self.room.items.append(item)
+        self.items.remove(item)
+        print(item)

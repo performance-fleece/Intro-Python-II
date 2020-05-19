@@ -7,7 +7,7 @@ import time
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", items=["sword", "mace", "long_sword", "sword"]),
+                     "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -24,12 +24,15 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-# items = {
-#     'sword': Item("short sword"),
-#     'long_sword': Item("long sword"),
-#     'mace': Item("mace")
+items = {
+    'sword': Item("short sword"),
+    'long sword': Item("long sword"),
+    'mace': Item("mace")
 
-# }
+}
+
+# initial item placement in rooms
+room['outside'].items = [items['sword'], items['mace']]
 
 # Link rooms together
 
@@ -62,10 +65,20 @@ player = Player("Jeremy", room['outside'], items=["sword"])
 #
 # If the user enters "q", quit the game.
 print("\033[0;37;40m Welcome to my first MUD")
+
+
+def take(item):
+    try:
+        if items[item]:
+            print("Item found!")
+            player.add(items[item])
+    except:
+        print("You grab at thin air!")
+
+
 while True:
+
     time.sleep(.5)
-    # print(
-    #     f"Current Room: {player.room.name} \n === Description === \n {player.room.description}")
     print(player.room)
     if len(player.room.items) >= 1:
         print(f"This room contains {len(player.room.items)} items:")
@@ -78,9 +91,6 @@ while True:
     player_input = input(
         'Which Direction do you wish to go?\n N, E, S, W or q to quit? ')
 
-    print(player_input.split())
-    print(len(player_input.split()))
-
     # if player_input == ('n' or 's' or 'e' or 'w'):
     #     player.travel(player_input)
     if len(player_input.split()) == 2:
@@ -88,11 +98,18 @@ while True:
 
         if split_input[0].lower() in ["take", "get"]:
             try:
-                print(f"take/get method here of Item: {split_input[1]}")
-                player.items.append(Item(item[split_input[1]]))
-
+                if items[split_input[1].lower()]:
+                    print("Item found!")
+                    player.add(items[split_input[1].lower()])
             except:
-                print("You grab at nothing")
+                print("You grab at thin air!")
+        if split_input[0].lower() == 'drop':
+            try:
+                if player.items[split_input[1].lower()]:
+                    print("Item in inventory")
+                    # player.drop(items[split_input[1].lower()])
+            except:
+                print("Item not found in inventory")
 
     if len(player_input.split()) == 1:
         try:
