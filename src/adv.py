@@ -7,7 +7,7 @@ import time
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", items=["sword", "mace"]),
+                     "North of you, the cave mount beckons", items=["sword", "mace", "long_sword", "sword"]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -24,12 +24,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-items = {
-    'sword': Item("short sword"),
-    'long_sword': Item("long sword"),
-    'mace': Item('mace')
+# items = {
+#     'sword': Item("short sword"),
+#     'long_sword': Item("long sword"),
+#     'mace': Item("mace")
 
-}
+# }
 
 # Link rooms together
 
@@ -48,7 +48,7 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player("Jeremy", room['outside'])
+player = Player("Jeremy", room['outside'], items=["sword"])
 
 
 # Write a loop that:
@@ -69,7 +69,11 @@ while True:
     print(player.room)
     if len(player.room.items) >= 1:
         print(f"This room contains {len(player.room.items)} items:")
-        [print(item) for item in player.room.items]
+        [print("       " + str(item)) for item in player.room.items]
+
+    if len(player.items) >= 1:
+        print(f"Player Inventory:")
+        [print("       " + str(item)) for item in player.items]
 
     player_input = input(
         'Which Direction do you wish to go?\n N, E, S, W or q to quit? ')
@@ -81,8 +85,14 @@ while True:
     #     player.travel(player_input)
     if len(player_input.split()) == 2:
         split_input = player_input.split()
-        if split_input[0].lower in ["take", "get"]:
-            print(f"take/get method here of Item: {split_input[1]}")
+
+        if split_input[0].lower() in ["take", "get"]:
+            try:
+                print(f"take/get method here of Item: {split_input[1]}")
+                player.items.append(Item(item[split_input[1]]))
+
+            except:
+                print("You grab at nothing")
 
     if len(player_input.split()) == 1:
         try:
